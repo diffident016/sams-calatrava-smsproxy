@@ -65,18 +65,23 @@ app.get('/api/account', (req, res) => {
     }
 });
 
-const PORT = process.env.SERVER_PORT || 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`The proxy server is running on ${PORT}`)
 
-    request(
-        { url: `${API_URL}/account?apikey=${apikey}` },
-        (error, response, body) => {
-            if (error || response.statusCode !== 200) {
-                return res.json({ type: 'error', message: 'Error' });
-            }
+    try {
+        request(
+            { url: `${API_URL}/account?apikey=${apikey}` },
+            (error, response, body) => {
+                if (error || response.statusCode !== 200) {
+                    return res.json({ type: 'error', message: 'Error' });
+                }
 
-            CREDITS = JSON.parse(body)['credit_balance']
-        }
-    );
+                CREDITS = JSON.parse(body)['credit_balance']
+            }
+        );
+    } catch {
+        console.log('ERROR')
+    }
+
 });
