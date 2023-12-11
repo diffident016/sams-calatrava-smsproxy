@@ -74,7 +74,7 @@ app.listen(PORT, () => {
             { url: `${API_URL}/account?apikey=${apikey}` },
             (error, response, body) => {
                 if (error || response.statusCode !== 200) {
-                    return res.json({ type: 'error', message: 'Error' });
+                    return
                 }
 
                 CREDITS = JSON.parse(body)['credit_balance']
